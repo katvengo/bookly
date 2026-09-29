@@ -14,7 +14,7 @@ frontend:
         - npm install
     build:
       commands:
-        - npm start build
+         - ng build --prod
   artifacts:
     baseDirectory: frontend/dist
     files:
