@@ -4,21 +4,22 @@ env:
   variables:
     NODE_VERSION: 24.21.0
     ANGULAR_VERSION: 21.2.24
+
 frontend:
   phases:
     preBuild:
       commands:
-        - npm install -g@angular/cli@ANGULAR_VERSION
         - cd frontend
+        - npm install -g @angular/cli@$ANGULAR_VERSION
         - npm install
-        - ng build
-    # IMPORTANT - Please verify your build commands
     build:
-      commands: []
+      commands:
+        - cd frontend
+        - ng build
   artifacts:
-    baseDirectory: dist/frontend
+    baseDirectory: frontend/dist
     files:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/*
+      - frontend/node_modules/**/*
