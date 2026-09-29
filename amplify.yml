@@ -35,7 +35,7 @@ frontend:
         - npx ng build --configuration=production --base-href "/frontend" --deploy-url "https://main.d1d91jrlaov4rt.amplifyapp.com/"
   artifacts:
     # Points to the standard Angular build output path
-    baseDirectory: dist/frontend/browser/
+    baseDirectory: frontend/dist/frontend/browser/
     files:
       - '**/*'
   cache:
