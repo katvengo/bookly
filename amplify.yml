@@ -38,6 +38,3 @@ frontend:
     baseDirectory: frontend/dist/frontend/browser/
     files:
       - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
