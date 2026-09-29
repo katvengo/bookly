@@ -11,6 +11,7 @@ frontend:
         - npm install -g@angular/cli@ANGULAR_VERSION
         - cd frontend
         - npm install
+        - ng build
     # IMPORTANT - Please verify your build commands
     build:
       commands: []
