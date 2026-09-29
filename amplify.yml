@@ -3,8 +3,7 @@ version: 1
 env:
   variables:
     NODE_VERSION: 24.21.0
-    ANGULAR_VERSION: 21.2.24
-
+    ANGULAR_VERSION: 22.2.0
 frontend:
   phases:
     preBuild:
