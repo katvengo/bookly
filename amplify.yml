@@ -21,7 +21,7 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - frontend/node_modules/**/*
+      - node_modules/**/*
 version: 1
 frontend:
   phases:
