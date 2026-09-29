@@ -9,7 +9,9 @@ frontend:
     preBuild:
       commands:
         - cd frontend
-        - npm install -g @angular/cli@$ANGULAR_VERSION
+        - nvm install 24.21.0 # Install the correct Node.js version
+        - nvm use 24.21.0     # Use the correct Node.js version
+        - npm install -g @angular/cli@22.2.0
         - npm install
     build:
       commands:
