@@ -1,0 +1,23 @@
+version: 1
+
+env:
+  variables:
+    NODE_VERSION: 24.21.0
+    ANGULAR_VERSION: 21.2.24
+phases:
+  install:
+    runtime-versions:
+      nodejs: $NODE_VERSION
+      commands:
+        - npm install -g@angular/cli@ANGULAR_VERSION
+        - npm install
+    # IMPORTANT - Please verify your build commands
+    build:
+      commands: []
+  artifacts:
+    baseDirectory: dist/frontend
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
