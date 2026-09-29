@@ -14,7 +14,7 @@ frontend:
         - npm install
     build:
       commands:
-        - ng build --configuration production --base-href /
+         - npx ng build --configuration=production --base-href "/frontend" --deploy-url "https://main.d1d91jrlaov4rt.amplifyapp.com/"
   artifacts:
     baseDirectory: frontend/dist/frontend
     files:
