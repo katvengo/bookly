@@ -13,7 +13,7 @@ frontend:
         - npm install
     build:
       commands:
-         - npx ng build --configuration=production --base-href "/frontend" --deploy-url "https://main.d1d91jrlaov4rt.amplifyapp.com/"
+         - npx ng build --configuration=production --base-href "/frontend"
   artifacts:
     baseDirectory: frontend/dist/frontend
     files:
@@ -21,6 +21,8 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+runtime:
+nodejs: 24.21.0
 # version: 1
 # frontend:
 #   phases:
