@@ -45,7 +45,7 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "deployUrl": "/browser/"
+              "deployUrl": "/"
             }
           }
         },
