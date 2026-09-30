@@ -17,7 +17,7 @@ frontend:
       commands:
          - npx ng build --configuration=production --base-href "/frontend/dist/browser/" --deploy-url "https://main.d1d91jrlaov4rt.amplifyapp.com/"
   artifacts:
-    baseDirectory: frontend/dist
+    baseDirectory: frontend/dist/browser
     files:
       - '**/*'
   cache:
