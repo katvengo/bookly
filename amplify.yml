@@ -17,7 +17,7 @@ frontend:
       commands:
          - npx ng build --configuration=production --base-href "/frontend"
   artifacts:
-    baseDirectory: dist/browser/
+    baseDirectory: dist/
     files:
       - '**/*'
   cache:
