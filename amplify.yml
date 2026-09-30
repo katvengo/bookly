@@ -17,12 +17,12 @@ frontend:
       commands:
          - npx ng build --configuration=production
   artifacts:
-    baseDirectory: frontend/dist/browser/
+    baseDirectory: frontend/dist/browser
     files:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/*
+      - frontend/node_modules/**/*
 runtime:
 nodejs: 24.21.0
 # version: 1
