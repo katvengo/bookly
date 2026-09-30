@@ -18,7 +18,7 @@
           "options": {
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
-            "outputPath": "dist/browser/browser/",
+            "outputPath": "frontend/dist/browser/",
             "assets": [
               "src/favicon.ico",
               "src/assets",
