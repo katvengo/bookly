@@ -15,7 +15,7 @@ frontend:
         - npm install
     build:
       commands:
-         - npx ng build --configuration=production --base-href "/frontend/dist/browser/" --deploy-url "/browser/"
+         - npx ng build --configuration=production --base-href "/" --deploy-url "/browser/"
   artifacts:
     baseDirectory: frontend/dist/browser
     files:
