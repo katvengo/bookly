@@ -19,7 +19,7 @@
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
             "outputPath": {
-              "base": "dist/"
+              "base": "dist/browser/"
             },
             "assets": [
               "src/favicon.ico",
