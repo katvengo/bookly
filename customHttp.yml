@@ -1,0 +1,5 @@
+customHeaders:
+  - pattern: '**/*.js'
+    headers:
+      - key: 'Content-Type'
+        value: 'text/javascript'
