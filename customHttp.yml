@@ -1,5 +1,5 @@
 customHeaders:
-  # Prevent CloudFront from serving a stale index.html that references old hashed bundles.
+  # Keep HTML fresh so hashed bundle filenames in index.html stay in sync after deploys.
   - pattern: '/index.html'
     headers:
       - key: 'Cache-Control'
@@ -8,16 +8,12 @@ customHeaders:
     headers:
       - key: 'Cache-Control'
         value: 'no-cache, no-store, must-revalidate'
-  # Angular emits ES modules; Amplify must advertise a JavaScript MIME type.
+  # Long-cache fingerprinted assets only (do not override Content-Type; Amplify/S3 sets it).
   - pattern: '**/*.js'
     headers:
-      - key: 'Content-Type'
-        value: 'text/javascript; charset=utf-8'
       - key: 'Cache-Control'
         value: 'public, max-age=31536000, immutable'
   - pattern: '**/*.css'
     headers:
-      - key: 'Content-Type'
-        value: 'text/css; charset=utf-8'
       - key: 'Cache-Control'
         value: 'public, max-age=31536000, immutable'
