@@ -1,46 +1,30 @@
 version: 1
-
 env:
   variables:
     NODE_VERSION: 24.21.0
-    ANGULAR_VERSION: 22.2.0
 frontend:
   phases:
     preBuild:
       commands:
+        - nvm install 24.21.0
+        - nvm use 24.21.0
         - cd frontend
-        - nvm install 24.21.0 # Install the correct Node.js version
-        - nvm use 24.21.0     # Use the correct Node.js version
-        - npm install -g @angular/cli@22.2.0
         - npm ci
     build:
       commands:
-         - npx ng build --configuration=production
+        - nvm use 24.21.0
+        # Re-enter app dir in case the build image resets cwd between phases.
+        - cd frontend
+        - npm run build
+        # Fail the build if the publish directory is missing expected SPA artifacts.
+        - test -f dist/frontend/index.html
+        - test -n "$(find dist/frontend -maxdepth 1 -name 'main-*.js' -print -quit)"
+        - ls -la dist/frontend
   artifacts:
-    baseDirectory: frontend/dist/frontend/browser/
+    # Angular application builder output (flattened; see angular.json outputPath.browser)
+    baseDirectory: frontend/dist/frontend
     files:
       - '**/*'
   cache:
     paths:
       - frontend/node_modules/**/*
-runtime:
-nodejs: 24.21.0
-# version: 1
-# frontend:
-#   phases:
-#     preBuild:
-#       commands:
-#         # Enforce clean dependencies installation using npm ci
-#         - npm ci --cache .npm --prefer-offline
-#     build:
-#       commands:
-#         # Build the Angular application for production production
-#         - npx ng build --configuration=production --base-href "/frontend" --deploy-url "https://main.d1d91jrlaov4rt.amplifyapp.com/"
-#   artifacts:
-#     # Points to the standard Angular build output path
-#     baseDirectory: frontend/dist/frontend/browser/
-#     files:
-#       - '**/*'
-#   cache:
-#     paths:
-#       - node_modules/**/*
