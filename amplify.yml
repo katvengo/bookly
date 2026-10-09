@@ -12,16 +12,16 @@ frontend:
         - npm ci
     build:
       commands:
+        # Amplify keeps the shell cwd across phases, so we are already in frontend/.
         - nvm use 24.21.0
-        # Re-enter app dir in case the build image resets cwd between phases.
-        - cd frontend
         - npm run build
         # Fail the build if the publish directory is missing expected SPA artifacts.
         - test -f dist/frontend/index.html
-        - test -n "$(find dist/frontend -maxdepth 1 -name 'main-*.js' -print -quit)"
+        - find dist/frontend -maxdepth 1 -name 'main-*.js' | grep -q .
         - ls -la dist/frontend
   artifacts:
     # Angular application builder output (flattened; see angular.json outputPath.browser)
+    # baseDirectory is always relative to the repository root.
     baseDirectory: frontend/dist/frontend
     files:
       - '**/*'
