@@ -1,3 +1,3 @@
 <input [type]="type()" [id]="id()" [name]="name()" [value]="value()" [placeholder]="placeholder()"
-  (input)="value.set($event.target.value)" [disabled]="disabled()" [readonly]="readonly()" [class.invalid]="invalid()"
+  (input)="value.set($event.target.value)" [disabled]="disabled()" [readonly]="readonly()" [class.invalid]="isError()"
   [attr.aria-invalid]="invalid()" (blur)="touch.emit()">

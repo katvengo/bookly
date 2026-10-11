@@ -1,8 +1,16 @@
-<form novalidate>
+<form [formRoot]="loginForm" (submit)="onSubmit()">
 <label>Name</label>
 <app-input [formField]="loginForm.name"></app-input>
 <label>Email</label>
-<app-input [formField]="loginForm.email"></app-input>
 
-<app-button>Create an Account</app-button>
+<app-input [formField]="loginForm.email" [isError]="loginForm.email().touched() && loginForm.email().invalid()"></app-input>
+@if (loginForm.email().touched() && loginForm.email().invalid()) {
+  @for (error of loginForm.email().errors(); track $index) {
+   <span class="error">
+    {{ error.message }}
+  </span>
+  }
+
+}
+<app-button [type]="'submit'" [disabled]="loginForm().invalid()">Create an Account</app-button>
 </form>

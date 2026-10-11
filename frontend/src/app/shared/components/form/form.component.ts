@@ -1,12 +1,19 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { InputComponent } from '../input/input.component';
-import {form, FormField, required, email} from '@angular/forms/signals';
+import {
+  email,
+  form,
+  FormField,
+  FormRoot,
+  minLength,
+  required,
+  submit,} from '@angular/forms/signals';
 import { ButtonComponent } from '../button/button.component';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
-  imports: [InputComponent, FormField, ButtonComponent]
+  imports: [InputComponent, FormField, FormRoot, ButtonComponent]
 })
 export class FormComponent implements OnInit {
 loginModel = signal({name: '', email: ''});
@@ -20,4 +27,7 @@ constructor() { }
   ngOnInit() {
   }
 
+onSubmit() {
+   console.log('Form submitted successfully:', this.loginModel());
+}
 }

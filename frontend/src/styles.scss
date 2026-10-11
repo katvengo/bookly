@@ -15,6 +15,7 @@
   --teal: #95f5e3;
   --yellow: #f5f295;
   --white: #ffffff;
+  --red: #ff0e0e;
 
   /* Font families */
   --font-family: 'Roboto', 'Arial' system-ui, sans-serif;
@@ -47,7 +48,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%);
+  background: linear-gradient(90deg, #5A4FCF 0%, #F1DDCF 100%);
 }
 
 /* Global styles */

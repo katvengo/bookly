@@ -1,4 +1,31 @@
+@use 'tokens' as *;
+@use 'mixins/typography' as *;
+
 :host {
   display:flex;
   align-items: center;
+}
+
+.header {
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.subheader {
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1, h3 {
+  color: $white;
+}
+
+h1 {
+  @include h1;
+}
+
+h3 {
+  @include h3;
 }

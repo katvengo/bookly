@@ -1,15 +1,24 @@
+@use 'tokens' as *;
 // Typography mixins — import with: @use 'mixins/typography' as *;
 
-@mixin heading1 {
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 1.6;
-  letter-spacing: 12%;
+@mixin h1 {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;      /* Ultra bold */
+  line-height: 1.1;      /* Tight line height for large scales */
+  letter-spacing: -0.03em;/* Negative spacing prevents letters looking scattered */
+  color: $secondary-color;
+  font-size: 66px;
+  text-shadow: 1px 1px 2px;
 }
 
 @mixin h3 {
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.6;
-  letter-spacing: 18%;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;       /* Slightly larger than body text */
+  font-weight: 400;         /* Cleaner, lighter weight */
+  color: $white;           /* Muted gray/slate for visual hierarchy */
+  line-height: 1.5;         /* Easy readability */
+  letter-spacing: -0.01em;  /* Subtle tightening for clean look */
+  text-wrap: balance;       /* Distributes text evenly across lines */
+  margin-top: 0.5rem;       /* Tight spacing below the main H1 */
+  margin-bottom: 2rem;
 }

@@ -24,3 +24,9 @@ button:hover {
   background-color: $secondary-color-hover;
   color: $white;
 }
+
+button:disabled {
+  opacity: 30%;
+  color: $white;
+  cursor: not-allowed;
+}
