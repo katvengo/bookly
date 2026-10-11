@@ -1,0 +1,15 @@
+@mixin heading1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 12%;
+}
+
+@mixin h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 18%;
+}

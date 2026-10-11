@@ -1,0 +1,24 @@
+@import '@/styles/mixins/typography.scss';
+@import '@/styles/tokens.scss';
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  box-sizing: border-box;
+
+  border: 1px solid var(--black);
+  border-radius: 8px;
+}
+
+// Removes the blueish outline when focused on input
+input:focus-visible {
+  outline: none;
+  border: 1px solid $primary-color;
+
+}
+
+.invalid {
+  border: 1px solid $danger;
+
+}

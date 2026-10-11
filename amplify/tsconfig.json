@@ -10,8 +10,14 @@
     "skipLibCheck": true,
     "paths": {
       "$amplify/*": [
-        "../.amplify/generated/*"
+        "../.amplify/generated/*",
+      ],
+      "@styles/*": [
+        "../frontend/src/app/styles/*"
+      ],
+      "@src": [
+        "../frontend/src"
       ]
-    }
+    },
   }
 }
