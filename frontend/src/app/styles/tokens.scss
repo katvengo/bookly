@@ -1,25 +1,10 @@
-:root {
-  --dark-green: #284d2f;
-  --forest-green: #00755c;
-  --light-green: #a5d6a7;
-  --light-yellow: #fefedf;
-  --mint-green: #f8fff8;
-  --black: hsla(200, 0%, 0%, 0.7);
-  --dark-blue: #000036;
-  --purple: #bd95f5;
-  --dark-purple: #3c1f72;
-  --green: #D6F595;
-  --coral: #F5AF95;
-  --teal: #95F5E3;
-  --yellow: #F5F295;
-}
+// Design tokens — import with: @use 'tokens' as *;
+// CSS custom properties are defined once in src/styles.scss.
 
 $primary-color: var(--purple);
 $primary-color-hover: var(--dark-purple);
 $primary-light-color: var(--light-yellow);
 $primary-dark-color: var(--dark-blue);
-
-
 
 $success: var(--green);
 $danger: var(--coral);

@@ -1,5 +1,5 @@
-@import '@/styles/mixins/typography.scss';
-@import '@/styles/tokens.scss';
+@use 'tokens' as *;
+@use 'mixins/typography' as *;
 
 button {
   display: flex;

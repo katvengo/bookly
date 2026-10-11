@@ -1,7 +1,6 @@
-@use 'variables' as *;
+@use 'tokens' as *;
 
 :host {
   display: block;
-  color: $color-text;
-  font-family: $font-family-base;
+  color: $primary-dark-color;
 }
