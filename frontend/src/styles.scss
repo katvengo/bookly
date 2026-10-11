@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+/* Global styles */
+body {
+  margin: 0;
+  color: $color-text;
+  background-color: $color-background;
+  font-family: $font-family-base;
+}
