@@ -10,10 +10,7 @@ import {
   submit,} from '@angular/forms/signals';
 import { ButtonComponent } from '../button/button.component';
 import { UserModel } from '@/features/Homepage/homepage.component';
-import { Amplify } from 'aws-amplify';
-import { signIn, signUp } from 'aws-amplify/auth'
-import outputs from '../../../../../../amplify/auth/amplify_outputs.json';
-Amplify.configure(outputs);
+import { signUp } from 'aws-amplify/auth';
 
 @Component({
   selector: 'app-form',
@@ -46,20 +43,27 @@ async onSubmit() {
 }
 
 async onSignUp() {
+  const email = this.userInfo()?.email ?? '';
+  const password = this.userInfo()?.password ?? '';
+  if (!email || !password) {
+    this.errorMessage.set('Email and password are required');
+    return;
+  }
+
   try {
-    const { isSignUpComplete, userId, nextStep } = await signUp({
-      username: this.userInfo()?.email ?? '', // Cognito uses username or email depending on config
-      password: this.userInfo()?.password,
+    const { nextStep } = await signUp({
+      username: email,
+      password,
       options: {
         userAttributes: {
-          email: this.userInfo()?.email // Required attribute
-        }
-      }
+          email,
+        },
+      },
     });
     console.log('Sign up successful, next step:', nextStep);
     // Pro-tip: Next step is typically 'CONFIRM_SIGN_UP' (verifying email code)
-  } catch (error: any) {
-    this.errorMessage.set(error.message);
+  } catch (error: unknown) {
+    this.errorMessage.set(error instanceof Error ? error.message : 'Sign up failed');
   }
 }
 }
