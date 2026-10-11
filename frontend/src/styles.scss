@@ -12,12 +12,45 @@
   --coral: #f5af95;
   --teal: #95f5e3;
   --yellow: #f5f295;
+  --white: #ffffff;
+
+  /* Font families */
+  --font-family: 'Roboto', 'Arial' system-ui, sans-serif;
+
+  /* Font sizes (Modular scale) */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.25rem; /* 25px */
+  --text-xl: 1.5rem; /* 24px */
+  --text-2xl: 1.875rem; /* 30px */
+  --text-3xl: 2.5rem; /* 40px */
+
+  /* Line heights */
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
+
+  /* Letter Spacing Tokens */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.1em;
 }
 
 /* Global styles */
 body {
-  margin: 0;
   color: var(--black);
-  background-color: var(--mint-green);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-family);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wide);
+}
+
+span {
+  font-family: var(--font-family);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wide);
 }
