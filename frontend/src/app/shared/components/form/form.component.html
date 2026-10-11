@@ -12,5 +12,8 @@
   }
 
 }
+  <label>Password</label>
+  <app-input [formField]="loginForm.password"></app-input>
+
 <app-button [type]="'submit'" [disabled]="loginForm().invalid()">Create an Account</app-button>
 </form>
