@@ -9,6 +9,7 @@
   --purple: #bd95f5;
   --purpleLight: #dacfeb;
   --dark-purple: #3c1f72;
+  --dark-purple-50: #4a3472;
   --green: #d6f595;
   --coral: #f5af95;
   --teal: #95f5e3;
@@ -46,7 +47,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-  background-color: var(--purpleLight);
+  background: linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%);
 }
 
 /* Global styles */

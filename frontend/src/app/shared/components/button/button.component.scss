@@ -12,15 +12,15 @@ button {
   align-items: center;
   cursor: pointer;
   padding: 0px;
-  background-color: $primary-color;
+  background-color: $secondary-color;
   border: none;
   border-radius: 60px;
-  color: $primary-color-hover;
+  color: $white;
 
   font-weight: 600;
 }
 
 button:hover {
-  background-color: $primary-color-hover;
+  background-color: $secondary-color-hover;
   color: $white;
 }

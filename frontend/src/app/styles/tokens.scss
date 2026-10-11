@@ -2,7 +2,9 @@
 // CSS custom properties are defined once in src/styles.scss.
 
 $primary-color: var(--purple);
-$primary-color-hover: var(--dark-purple);
+$secondary-color: var(--dark-purple);
+$secondary-color-hover: var(--dark-purple-50);
+
 $primary-light-color: var(--white);
 $primary-dark-color: var(--dark-blue);
 
