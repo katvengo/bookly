@@ -5,7 +5,7 @@ import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
   imports: [],
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
 })
 export class App {
   protected readonly title = signal('frontend');
