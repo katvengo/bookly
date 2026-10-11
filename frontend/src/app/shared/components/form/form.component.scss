@@ -1,4 +1,4 @@
-@import '@/styles/tokens.scss';
+@use 'tokens' as *;
 
 .form-button {
   color: $primary-dark-color;

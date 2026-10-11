@@ -1,9 +1,23 @@
-@use 'variables' as *;
+:root {
+  --dark-green: #284d2f;
+  --forest-green: #00755c;
+  --light-green: #a5d6a7;
+  --light-yellow: #fefedf;
+  --mint-green: #f8fff8;
+  --black: hsla(200, 0%, 0%, 0.7);
+  --dark-blue: #000036;
+  --purple: #bd95f5;
+  --dark-purple: #3c1f72;
+  --green: #d6f595;
+  --coral: #f5af95;
+  --teal: #95f5e3;
+  --yellow: #f5f295;
+}
 
 /* Global styles */
 body {
   margin: 0;
-  color: $color-text;
-  background-color: $color-background;
-  font-family: $font-family-base;
+  color: var(--black);
+  background-color: var(--mint-green);
+  font-family: 'Inter', system-ui, sans-serif;
 }

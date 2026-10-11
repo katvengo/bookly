@@ -1,3 +1,5 @@
+// Typography mixins — import with: @use 'mixins/typography' as *;
+
 @mixin heading1 {
   font-family: 'Inter', sans-serif;
   font-size: 48px;

@@ -1,5 +1,5 @@
-@import '@/styles/mixins/typography.scss';
-@import '@/styles/tokens.scss';
+@use 'tokens' as *;
+@use 'mixins/typography' as *;
 
 input {
   width: 100%;
@@ -15,10 +15,8 @@ input {
 input:focus-visible {
   outline: none;
   border: 1px solid $primary-color;
-
 }
 
 .invalid {
   border: 1px solid $danger;
-
 }
