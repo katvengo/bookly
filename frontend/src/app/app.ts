@@ -1,13 +1,11 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from './shared/components/button/button.component';
-import { InputComponent } from './shared/components/input/input.component';
-import { FormComponent } from './shared/components/form/form.component';
+import { RouterModule} from '@angular/router';
+import {routes} from './app.routes';
 @Component({
   selector: 'app-root',
-  imports: [ButtonComponent, CommonModule, InputComponent, FormComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './app.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.scss',
 })
 export class App {

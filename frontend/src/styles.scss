@@ -7,6 +7,7 @@
   --black: hsla(200, 0%, 0%, 0.7);
   --dark-blue: #000036;
   --purple: #bd95f5;
+  --purpleLight: #dacfeb;
   --dark-purple: #3c1f72;
   --green: #d6f595;
   --coral: #f5af95;
@@ -37,6 +38,15 @@
   --tracking-normal: 0em;
   --tracking-wide: 0.025em;
   --tracking-wider: 0.1em;
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--purpleLight);
 }
 
 /* Global styles */
