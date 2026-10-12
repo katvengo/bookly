@@ -12,8 +12,7 @@ import { ButtonComponent } from '../button/button.component';
 import { UserModel } from '@/features/Homepage/homepage.component';
 import { Amplify } from 'aws-amplify';
 import { signIn, signUp } from 'aws-amplify/auth'
-import outputs from '../../../../../../amplify/auth/amplify_outputs.json';
-Amplify.configure(outputs);
+
 
 @Component({
   selector: 'app-form',
@@ -56,9 +55,11 @@ async onSignUp() {
         }
       }
     });
+    console.log('Sign up response:', { isSignUpComplete, userId, nextStep });
     console.log('Sign up successful, next step:', nextStep);
     // Pro-tip: Next step is typically 'CONFIRM_SIGN_UP' (verifying email code)
   } catch (error: any) {
+    console.log('Sign up error:', error);
     this.errorMessage.set(error.message);
   }
 }
