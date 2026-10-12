@@ -2,6 +2,24 @@
 
 Angular frontend with an AWS Amplify Gen 2 backend (Auth + Data).
 
+## Custom login UI (not Cognito Hosted UI)
+
+Yes — you can (and should, for Bookly) use **your own Angular login page**. Cognito is only the user directory; it does not have to show AWS’s Hosted UI.
+
+| Approach | What the user sees | Use when |
+| --- | --- | --- |
+| **Your forms + Amplify Auth APIs** (`signIn` / `signUp` / `confirmSignUp`) | Your Angular UI | Preferred for this app |
+| Amplify `<amplify-authenticator>` | Pre-built Amplify widget in your app | Fast prototype |
+| Cognito **Hosted UI** (`signInWithRedirect()` with no provider, or a Cognito domain login URL) | AWS-hosted page | Only if you want OAuth redirect / social IdPs via Hosted UI |
+
+Bookly uses the first option in `frontend/src/app/shared/components/form/`. Do **not** open the Cognito console “View Hosted UI” link for day-to-day login, and do **not** call `signInWithRedirect()` unless you intentionally want that hosted page.
+
+Docs:
+- Sign-in API: https://docs.amplify.aws/angular/build-a-backend/auth/connect-your-frontend/sign-in/
+- Sign-up API: https://docs.amplify.aws/angular/build-a-backend/auth/connect-your-frontend/sign-up/
+
+Point `frontend/public/amplify_outputs.json` at your User Pool (via sandbox or a manual outputs file with `user_pool_id`, `user_pool_client_id`, and `aws_region`). The app UI stays yours.
+
 ## Auth from scratch (recommended path)
 
 Skip SSO if it is giving you trouble. Use IAM access keys in `us-west-2` (your account region).
