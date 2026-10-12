@@ -52,7 +52,7 @@ Example answers (use *your* portal URL and region):
 | SSO session name | `amplify-admin` |
 | SSO start URL | `https://d-xxxxxxxxxx.awsapps.com/start` |
 | SSO region | The region where Identity Center was enabled (often `us-east-1`) |
-| SSO registration scopes | press Enter (default `sso:account:access`) |
+| SSO registration scopes | press Enter — keep the default `sso:account:access` (you do not look this up in the console) |
 | CLI default client Region | `us-east-1` (a real region — do **not** type `default`) |
 | CLI profile name | `default` |
 
