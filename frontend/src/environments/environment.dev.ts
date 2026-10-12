@@ -1,5 +1,13 @@
 export const environment = {
   production: false,
-  appName: 'My Angular App', // Replace with your app name
-  version: '1.0.0' // Replace with your app version
+  appName: 'Bookly',
+  version: '1.0.0',
+  cognito: {
+    // Paste your existing Cognito User Pool + App client IDs (us-west-2).
+    // Leave blank to fall back to frontend/public/amplify_outputs.json from sandbox.
+    userPoolId: '',
+    userPoolClientId: '',
+    identityPoolId: '',
+    allowGuestAccess: false,
+  },
 };

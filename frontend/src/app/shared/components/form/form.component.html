@@ -1,19 +1,69 @@
-<form [formRoot]="loginForm" (submit)="onSubmit()">
-<label>Name</label>
-<app-input [formField]="loginForm.name"></app-input>
-<label>Email</label>
+<form [formRoot]="loginForm" (submit)="onSubmit($event)">
+  <div class="auth-mode">
+    <button
+      type="button"
+      class="auth-mode__link"
+      [class.auth-mode__link--active]="mode() === 'signIn'"
+      (click)="setMode('signIn')"
+    >
+      Sign in
+    </button>
+    <button
+      type="button"
+      class="auth-mode__link"
+      [class.auth-mode__link--active]="mode() === 'signUp' || mode() === 'confirmSignUp'"
+      (click)="setMode('signUp')"
+    >
+      Create account
+    </button>
+  </div>
 
-<app-input [formField]="loginForm.email" [isError]="loginForm.email().touched() && loginForm.email().invalid()"></app-input>
-@if (loginForm.email().touched() && loginForm.email().invalid()) {
-  @for (error of loginForm.email().errors(); track $index) {
-   <span class="error">
-    {{ error.message }}
-  </span>
+  @if (mode() === 'signUp') {
+    <label>Name</label>
+    <app-input [formField]="loginForm.name" [placeholder]="'Your name'"></app-input>
   }
 
-}
-  <label>Password</label>
-  <app-input [formField]="loginForm.password"></app-input>
+  <label>Email</label>
+  <app-input
+    [formField]="loginForm.email"
+    [type]="'email'"
+    [placeholder]="'you@example.com'"
+    [isError]="loginForm.email().touched() && loginForm.email().invalid()"
+  ></app-input>
+  @if (loginForm.email().touched() && loginForm.email().invalid()) {
+    @for (error of loginForm.email().errors(); track $index) {
+      <span class="error">{{ error.message }}</span>
+    }
+  }
 
-<app-button [type]="'submit'" [disabled]="loginForm().invalid()">Create an Account</app-button>
+  @if (mode() !== 'confirmSignUp') {
+    <label>Password</label>
+    <app-input
+      [formField]="loginForm.password"
+      [type]="'password'"
+      [placeholder]="'Password'"
+    ></app-input>
+  }
+
+  @if (mode() === 'confirmSignUp') {
+    <label>Confirmation code</label>
+    <app-input
+      [formField]="loginForm.confirmationCode"
+      [placeholder]="'Code from your email'"
+    ></app-input>
+    <button type="button" class="auth-mode__link" (click)="onResendCode()" [disabled]="busy()">
+      Resend code
+    </button>
+  }
+
+  @if (errorMessage()) {
+    <p class="error" role="alert">{{ errorMessage() }}</p>
+  }
+  @if (successMessage()) {
+    <p class="success" role="status">{{ successMessage() }}</p>
+  }
+
+  <app-button [type]="'submit'" [disabled]="loginForm().invalid() || busy()">
+    {{ submitLabel() }}
+  </app-button>
 </form>

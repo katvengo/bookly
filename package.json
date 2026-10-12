@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "check:aws-region": "node scripts/check-aws-region.mjs",
+    "sandbox": "npm run check:aws-region && ampx sandbox --outputs-out-dir frontend/public",
+    "sandbox:once": "npm run check:aws-region && ampx sandbox --once --outputs-out-dir frontend/public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
