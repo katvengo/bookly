@@ -9,9 +9,9 @@ backend:
         - nvm install 24.21.0
         - nvm use 24.21.0
         # Install Gen 2 tooling from the repo root, deploy backend, and write
-        # amplify_outputs.json where the Angular app imports it.
+        # amplify_outputs.json where the Angular app fetches it at runtime.
         - npm ci --cache .npm --prefer-offline
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID --outputs-out-dir frontend
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID --outputs-out-dir frontend/public
 frontend:
   phases:
     preBuild:
@@ -24,10 +24,11 @@ frontend:
       commands:
         # Amplify keeps the shell cwd across phases, so we are already in frontend/.
         - nvm use 24.21.0
-        - test -f amplify_outputs.json
+        - test -f public/amplify_outputs.json
         - npm run build
         # Fail the build if the publish directory is missing expected SPA artifacts.
         - test -f dist/frontend/index.html
+        - test -f dist/frontend/amplify_outputs.json
         - find dist/frontend -maxdepth 1 -name 'main-*.js' | grep -q .
         - ls -la dist/frontend
   artifacts:

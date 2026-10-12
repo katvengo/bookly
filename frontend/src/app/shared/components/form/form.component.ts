@@ -63,6 +63,12 @@ async onSignUp() {
     console.log('Sign up successful, next step:', nextStep);
     // Pro-tip: Next step is typically 'CONFIRM_SIGN_UP' (verifying email code)
   } catch (error: unknown) {
+    if (error instanceof Error && error.name === 'NoAmplifyContextError') {
+      this.errorMessage.set(
+        'Amplify is not configured. Generate frontend/public/amplify_outputs.json with "npm run sandbox", then reload.',
+      );
+      return;
+    }
     this.errorMessage.set(error instanceof Error ? error.message : 'Sign up failed');
   }
 }

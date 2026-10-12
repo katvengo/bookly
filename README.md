@@ -2,78 +2,58 @@
 
 Angular frontend with an AWS Amplify Gen 2 backend (Auth + Data).
 
-## Prerequisites
+## Auth from scratch (recommended path)
 
-- Node.js 24.15+ (Amplify Hosting uses 24.21.0)
-- An AWS account with local credentials (SSO or IAM access keys)
-- IAM permissions that include `AmplifyBackendDeployFullAccess` (or equivalent)
-- A real AWS region in your profile (for example `us-east-1`) — never the literal string `default`
+Skip SSO if it is giving you trouble. Use IAM access keys in `us-west-2` (your account region).
 
-Official Amplify account setup: https://docs.amplify.aws/angular/start/account-setup/
+### 1. Create an IAM user with Amplify permissions
 
-## First-time AWS SSO setup (what to enter for SSO start URL)
+In the AWS Console (region does not matter for IAM users):
 
-`aws configure sso` asks for **SSO start URL** *after* IAM Identity Center exists in your AWS account. If your account was never set up for SSO, cancel the CLI wizard (`Ctrl+C`) and create Identity Center first.
+1. **IAM** → **Users** → **Create user**
+2. Attach the managed policy **`AmplifyBackendDeployFullAccess`**
+   (`arn:aws:iam::aws:policy/service-role/AmplifyBackendDeployFullAccess`)
+3. Create an **Access key** (CLI) and copy the access key ID + secret
 
-### 1. Enable IAM Identity Center in the AWS Console
+### 2. Configure the AWS CLI
 
-1. Sign in to the [AWS Console](https://console.aws.amazon.com/) as the account root/admin.
-2. Open **IAM Identity Center** and choose **Enable** (with AWS Organizations if prompted).
-3. Follow Amplify’s CloudShell setup on the account-setup page (creates the `amplify-admin` user and `amplify-policy` permission set), **or** use the manual console steps on that same page.
-
-### 2. Get the SSO start URL
-
-It looks like:
-
-```text
-https://d-xxxxxxxxxx.awsapps.com/start
+```bash
+aws configure
 ```
 
-Get it from either place:
-
-- **CloudShell** (after Amplify’s setup commands), run:
-
-  ```bash
-  response=$(aws sso-admin list-instances)
-  ssoId=$(echo "$response" | jq '.Instances[0].IdentityStoreId' -r)
-  printf "Start session url: https://%s.awsapps.com/start\n" "$ssoId"
-  ```
-
-- **Console:** IAM Identity Center → dashboard → **Settings summary** → **AWS access portal URL**
-
-That value is what you paste for `SSO start URL:`.
-
-### 3. Finish `aws configure sso`
-
-Example answers (use *your* portal URL and region):
-
-| Prompt | Example answer |
+| Prompt | Answer |
 | --- | --- |
-| SSO session name | `amplify-admin` |
-| SSO start URL | `https://d-xxxxxxxxxx.awsapps.com/start` |
-| SSO region | The region where Identity Center was enabled (often `us-east-1`) |
-| SSO registration scopes | press Enter — keep the default `sso:account:access` (you do not look this up in the console) |
-| CLI default client Region | `us-east-1` (a real region — do **not** type `default`) |
-| CLI profile name | `default` |
+| AWS Access Key ID | your access key |
+| AWS Secret Access Key | your secret |
+| Default region name | `us-west-2` (must be a real region — never `default`) |
+| Default output format | `json` (or press Enter) |
 
-Complete the browser login / MFA when the CLI opens it. Set a password for `amplify-admin` in Identity Center if you have not already (Users → Reset password).
+Verify:
 
-### Simpler alternative (no SSO)
+```bash
+aws sts get-caller-identity
+aws configure get region
+# should print us-west-2
+```
 
-If you prefer not to use Identity Center yet, create an IAM user with access keys, attach `AmplifyBackendDeployFullAccess`, then run `aws configure` (access key / secret / region). Skip `aws configure sso`.
+### 3. Generate backend config (creates Cognito + amplify_outputs.json)
 
-## Local Amplify auth sandbox
-
-From the repository root:
+From the **repository root**:
 
 ```bash
 npm install
 npm run sandbox
 ```
 
-This runs `ampx sandbox` and writes `frontend/amplify_outputs.json`, which the Angular app imports from `frontend/src/main.ts`.
+Leave that process running. It writes:
 
-Then in another terminal:
+`frontend/public/amplify_outputs.json`
+
+That file is gitignored. The Angular app loads it at startup via `fetch('/amplify_outputs.json')` and calls `Amplify.configure(...)`.
+
+### 4. Run the Angular app
+
+In a second terminal:
 
 ```bash
 cd frontend
@@ -81,54 +61,40 @@ npm install
 npm start
 ```
 
-### Fix: `getaddrinfo ENOTFOUND ssm.default.amazonaws.com`
+Open `http://localhost:4200/` and use **Create an Account**.
 
-Amplify is calling AWS SSM with region set to the literal string `default`, which is not a valid AWS region. The SDK then tries to resolve `ssm.default.amazonaws.com` and DNS fails.
+If `amplify_outputs.json` is missing, the app shows a clear “Amplify is not configured” page instead of failing later with `NoAmplifyContextError`.
 
-Check your profile region:
+A shape reference lives at `frontend/public/amplify.outputs.example.json` (do not rename it over the real outputs file).
+
+### Why you saw `NoAmplifyContextError`
+
+`signUp()` needs a global Amplify context from `Amplify.configure()`. That only works after `frontend/public/amplify_outputs.json` exists. Deleting that file (or never running sandbox / Hosting backend deploy) removes the config, so Auth has nothing to talk to.
+
+## Optional: IAM Identity Center (SSO)
+
+Only needed if you prefer SSO. Follow https://docs.amplify.aws/angular/start/account-setup/
+
+- **SSO start URL** = Identity Center **AWS access portal URL** (`https://d-xxxx.awsapps.com/start`)
+- **SSO registration scopes** = press Enter (default `sso:account:access`)
+- Use region `us-west-2` for SSO region and CLI default client region
+
+## Deploy (Amplify Hosting)
+
+`amplify.yml` deploys the Gen 2 backend, writes outputs into `frontend/public/`, then builds Angular. Do not delete `amplify_outputs.json` from the build artifacts path; Hosting regenerates it each deploy.
+
+## Troubleshooting
+
+### `getaddrinfo ENOTFOUND ssm.default.amazonaws.com`
+
+AWS region is literally `default`. Fix:
 
 ```bash
-aws configure get region
-# or, for a named profile:
-aws configure get region --profile YOUR_PROFILE
-```
-
-If that prints `default` (or is empty), set a real region:
-
-```bash
-aws configure set region us-east-1
-# or:
-aws configure set region us-east-1 --profile YOUR_PROFILE
-```
-
-Also check that shell env vars are not overriding the config:
-
-```bash
-echo "$AWS_REGION" "$AWS_DEFAULT_REGION"
-# If either is "default", unset or fix it:
+aws configure set region us-west-2
 unset AWS_REGION AWS_DEFAULT_REGION
-export AWS_REGION=us-east-1
+export AWS_REGION=us-west-2
 ```
 
-You can inspect `~/.aws/config` and confirm it looks like:
+### Sandbox region / bootstrap
 
-```ini
-[default]
-region = us-east-1
-```
-
-not `region = default`.
-
-Then re-run:
-
-```bash
-npm run sandbox
-# or with an explicit profile:
-npx ampx sandbox --profile YOUR_PROFILE --outputs-out-dir frontend
-```
-
-On first use in a region, Amplify may ask you to bootstrap the account in the AWS console before sandbox can deploy Cognito.
-
-## Deploy
-
-See `amplify.yml`. Hosting runs Gen 2 `pipeline-deploy`, writes outputs into `frontend/`, then builds the Angular app.
+First sandbox in a region may ask you to bootstrap CDK in the Amplify console. Complete that, then re-run `npm run sandbox`.

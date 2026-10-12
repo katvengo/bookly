@@ -1,19 +1,24 @@
 <form [formRoot]="loginForm" (submit)="onSubmit()">
-<label>Name</label>
-<app-input [formField]="loginForm.name"></app-input>
-<label>Email</label>
+  <label>Name</label>
+  <app-input [formField]="loginForm.name"></app-input>
 
-<app-input [formField]="loginForm.email" [isError]="loginForm.email().touched() && loginForm.email().invalid()"></app-input>
-@if (loginForm.email().touched() && loginForm.email().invalid()) {
-  @for (error of loginForm.email().errors(); track $index) {
-   <span class="error">
-    {{ error.message }}
-  </span>
+  <label>Email</label>
+  <app-input
+    [formField]="loginForm.email"
+    [isError]="loginForm.email().touched() && loginForm.email().invalid()"
+  ></app-input>
+  @if (loginForm.email().touched() && loginForm.email().invalid()) {
+    @for (error of loginForm.email().errors(); track $index) {
+      <span class="error">{{ error.message }}</span>
+    }
   }
 
-}
   <label>Password</label>
   <app-input [formField]="loginForm.password"></app-input>
 
-<app-button [type]="'submit'" [disabled]="loginForm().invalid()">Create an Account</app-button>
+  @if (errorMessage()) {
+    <p class="error" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <app-button [type]="'submit'" [disabled]="loginForm().invalid()">Create an Account</app-button>
 </form>
