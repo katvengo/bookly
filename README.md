@@ -4,21 +4,45 @@ Angular frontend with an AWS Amplify Gen 2 backend (Auth + Data).
 
 ## Custom login UI (not Cognito Hosted UI)
 
-Yes — you can (and should, for Bookly) use **your own Angular login page**. Cognito is only the user directory; it does not have to show AWS’s Hosted UI.
+Yes — use **your own Angular login page**. Cognito is the user directory; Hosted UI is optional.
+
+Verified against Amplify’s [Use existing Cognito resources](https://docs.amplify.aws/angular/build-a-backend/auth/use-existing-cognito-resources/) guide:
+
+| Claim | Verdict |
+| --- | --- |
+| Custom forms + `signIn` / `signUp` / `confirmSignUp` talk to Cognito without Hosted UI | **Correct** — that guide configures the Amplify **client library** against your pool; it does not require Hosted UI |
+| Paste your existing `userPoolId` + `userPoolClientId` into `Amplify.configure({ Auth: { Cognito: … }})` | **Correct** — “Use auth resources without an Amplify backend” |
+| `referenceAuth(...)` for an Amplify backend that reuses console-created Cognito | **Correct** — but needs User Pool **and** Identity Pool + auth/unauth role ARNs |
+| Keep using `defineAuth()` while also pointing the app at a different manual pool | **Incorrect** — `defineAuth` creates/manages a separate Amplify pool |
 
 | Approach | What the user sees | Use when |
 | --- | --- | --- |
-| **Your forms + Amplify Auth APIs** (`signIn` / `signUp` / `confirmSignUp`) | Your Angular UI | Preferred for this app |
+| **Your forms + Amplify Auth APIs** | Your Angular UI | Preferred for this app |
 | Amplify `<amplify-authenticator>` | Pre-built Amplify widget in your app | Fast prototype |
-| Cognito **Hosted UI** (`signInWithRedirect()` with no provider, or a Cognito domain login URL) | AWS-hosted page | Only if you want OAuth redirect / social IdPs via Hosted UI |
+| Cognito **Hosted UI** | AWS-hosted page | Only if you want that redirect experience |
 
-Bookly uses the first option in `frontend/src/app/shared/components/form/`. Do **not** open the Cognito console “View Hosted UI” link for day-to-day login, and do **not** call `signInWithRedirect()` unless you intentionally want that hosted page.
+### Wire a User Pool you created in the Cognito console
+
+1. In Cognito, create an **App client** with **no client secret** (public SPA client) and auth flows that allow Amplify (`ALLOW_USER_SRP_AUTH` / USER_PASSWORD as needed).
+2. Put the IDs in `frontend/src/environments/environment.dev.ts` (and prod as needed):
+
+```ts
+cognito: {
+  userPoolId: 'us-west-2_xxxxxxxx',
+  userPoolClientId: 'xxxxxxxxxxxxxxxxxxxxxxxxxx',
+  identityPoolId: '', // only if you also created an Identity Pool
+  allowGuestAccess: false,
+}
+```
+
+3. Restart `npm start`. The app calls `Amplify.configure({ Auth: { Cognito: … }})` exactly as in the docs, then your form uses `signIn` / `signUp`.
+
+If those env fields are left blank, the app falls back to `frontend/public/amplify_outputs.json` from `npm run sandbox`.
 
 Docs:
+- Existing Cognito: https://docs.amplify.aws/angular/build-a-backend/auth/use-existing-cognito-resources/
 - Sign-in API: https://docs.amplify.aws/angular/build-a-backend/auth/connect-your-frontend/sign-in/
 - Sign-up API: https://docs.amplify.aws/angular/build-a-backend/auth/connect-your-frontend/sign-up/
-
-Point `frontend/public/amplify_outputs.json` at your User Pool (via sandbox or a manual outputs file with `user_pool_id`, `user_pool_client_id`, and `aws_region`). The app UI stays yours.
 
 ## Auth from scratch (recommended path)
 

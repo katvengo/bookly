@@ -17,9 +17,8 @@ async function main(): Promise<void> {
         <h1>Amplify is not configured</h1>
         <p>${message}</p>
         <ol>
-          <li>Configure AWS credentials for region <code>us-west-2</code> (IAM access keys are fine if SSO is not working).</li>
-          <li>From the repo root run <code>npm install && npm run sandbox</code>.</li>
-          <li>Confirm <code>frontend/public/amplify_outputs.json</code> was created.</li>
+          <li>Preferred for a console-created User Pool: set <code>cognito.userPoolId</code> and <code>cognito.userPoolClientId</code> in <code>src/environments/environment.dev.ts</code>.</li>
+          <li>Or generate <code>frontend/public/amplify_outputs.json</code> with <code>npm run sandbox</code> from the repo root.</li>
           <li>Restart <code>npm start</code> in <code>frontend/</code>.</li>
         </ol>
       </main>
