@@ -5,8 +5,62 @@ Angular frontend with an AWS Amplify Gen 2 backend (Auth + Data).
 ## Prerequisites
 
 - Node.js 24.15+ (Amplify Hosting uses 24.21.0)
-- AWS CLI configured with a real region (for example `us-east-1`)
+- An AWS account with local credentials (SSO or IAM access keys)
 - IAM permissions that include `AmplifyBackendDeployFullAccess` (or equivalent)
+- A real AWS region in your profile (for example `us-east-1`) — never the literal string `default`
+
+Official Amplify account setup: https://docs.amplify.aws/angular/start/account-setup/
+
+## First-time AWS SSO setup (what to enter for SSO start URL)
+
+`aws configure sso` asks for **SSO start URL** *after* IAM Identity Center exists in your AWS account. If your account was never set up for SSO, cancel the CLI wizard (`Ctrl+C`) and create Identity Center first.
+
+### 1. Enable IAM Identity Center in the AWS Console
+
+1. Sign in to the [AWS Console](https://console.aws.amazon.com/) as the account root/admin.
+2. Open **IAM Identity Center** and choose **Enable** (with AWS Organizations if prompted).
+3. Follow Amplify’s CloudShell setup on the account-setup page (creates the `amplify-admin` user and `amplify-policy` permission set), **or** use the manual console steps on that same page.
+
+### 2. Get the SSO start URL
+
+It looks like:
+
+```text
+https://d-xxxxxxxxxx.awsapps.com/start
+```
+
+Get it from either place:
+
+- **CloudShell** (after Amplify’s setup commands), run:
+
+  ```bash
+  response=$(aws sso-admin list-instances)
+  ssoId=$(echo "$response" | jq '.Instances[0].IdentityStoreId' -r)
+  printf "Start session url: https://%s.awsapps.com/start\n" "$ssoId"
+  ```
+
+- **Console:** IAM Identity Center → dashboard → **Settings summary** → **AWS access portal URL**
+
+That value is what you paste for `SSO start URL:`.
+
+### 3. Finish `aws configure sso`
+
+Example answers (use *your* portal URL and region):
+
+| Prompt | Example answer |
+| --- | --- |
+| SSO session name | `amplify-admin` |
+| SSO start URL | `https://d-xxxxxxxxxx.awsapps.com/start` |
+| SSO region | The region where Identity Center was enabled (often `us-east-1`) |
+| SSO registration scopes | press Enter (default `sso:account:access`) |
+| CLI default client Region | `us-east-1` (a real region — do **not** type `default`) |
+| CLI profile name | `default` |
+
+Complete the browser login / MFA when the CLI opens it. Set a password for `amplify-admin` in Identity Center if you have not already (Users → Reset password).
+
+### Simpler alternative (no SSO)
+
+If you prefer not to use Identity Center yet, create an IAM user with access keys, attach `AmplifyBackendDeployFullAccess`, then run `aws configure` (access key / secret / region). Skip `aws configure sso`.
 
 ## Local Amplify auth sandbox
 
