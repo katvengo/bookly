@@ -2,6 +2,9 @@ import { Component, OnInit, inject, model, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Card } from '@/shared/components/base/card/card';
 import { FormComponent } from '@/shared/components/form/form.component';
+import { getCurrentUser } from 'aws-amplify/auth';
+import { firstValueFrom } from 'rxjs';
+
 
 export interface UserModel {
   name: string;
@@ -24,6 +27,15 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialization logic here
+    this.getCurrentUserInfo();
+  }
+
+  async getCurrentUserInfo() {
+    const { username, userId, signInDetails } = await getCurrentUser();
+
+    console.log("username", username);
+    console.log("user id", userId);
+    console.log("sign-in details", signInDetails);
   }
 
 }
