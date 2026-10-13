@@ -1,11 +1,12 @@
-<form [formRoot]="loginForm" (submit)="onSubmit()">
+@if(!hasSignedUp()) {
+  <form [formRoot]="signUpForm" (submit)="onSignUpSubmit()">
 <label>Name</label>
-<app-input [formField]="loginForm.name"></app-input>
+<app-input [formField]="signUpForm.name"></app-input>
 <label>Email</label>
 
-<app-input [formField]="loginForm.email" [isError]="loginForm.email().touched() && loginForm.email().invalid()"></app-input>
-@if (loginForm.email().touched() && loginForm.email().invalid()) {
-  @for (error of loginForm.email().errors(); track $index) {
+<app-input [formField]="signUpForm.email" [isError]="signUpForm.email().touched() && signUpForm.email().invalid()"></app-input>
+@if (signUpForm.email().touched() && signUpForm.email().invalid()) {
+  @for (error of signUpForm.email().errors(); track $index) {
    <span class="error">
     {{ error.message }}
   </span>
@@ -13,7 +14,28 @@
 
 }
   <label>Password</label>
-  <app-input [formField]="loginForm.password"></app-input>
+  <app-input [formField]="signUpForm.password"></app-input>
 
-<app-button [type]="'submit'" [disabled]="loginForm().invalid()">Create an Account</app-button>
+<app-button [type]="'submit'" [disabled]="signUpForm().invalid()">Create an Account</app-button>
+<app-button [type]="'button'" (click)="onSwitch()">Already have an account? Log in</app-button>
 </form>
+} @else {
+  <form [formRoot]="loginForm" (submit)="onLoginSubmit()">
+    <label>Email</label>
+
+    <app-input [formField]="loginForm.email" [isError]="loginForm.email().touched() && loginForm.email().invalid()"></app-input>
+    @if (loginForm.email().touched() && loginForm.email().invalid()) {
+      @for (error of loginForm.email().errors(); track $index) {
+       <span class="error">
+        {{ error.message }}
+      </span>
+      }
+
+    }
+      <label>Password</label>
+      <app-input [formField]="loginForm.password"></app-input>
+
+    <app-button [type]="'submit'" [disabled]="loginForm().invalid()">Log in to your account</app-button>
+
+    </form>
+}

@@ -4,6 +4,7 @@ import { Card } from '@/shared/components/base/card/card';
 import { FormComponent } from '@/shared/components/form/form.component';
 
 export interface UserModel {
+  name: string;
   email: string;
   password: string;
 }
