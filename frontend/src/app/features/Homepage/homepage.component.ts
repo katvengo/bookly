@@ -4,12 +4,9 @@ import { CommonModule } from '@angular/common';
 import { getCurrentUser, signOut } from 'aws-amplify/auth';
 import { Card } from '@/shared/components/base/card/card';
 import { ButtonComponent } from '@/shared/components/button/button.component';
-
-export interface UserModel {
-  name: string;
-  email: string;
-  password: string;
-}
+import { FormComponent } from '@/shared/components/form/form.component';
+import { getCurrentUser } from 'aws-amplify/auth';
+import { UserModel } from '@/shared/interfaces/UserModel';
 
 @Component({
   selector: 'app-custom-component',
@@ -21,6 +18,10 @@ export interface UserModel {
 export class HomepageComponent implements OnInit {
   private readonly router = inject(Router);
   username = signal('');
+  userInfo = model<UserModel>();
+  constructor() {
+
+  }
 
   async ngOnInit(): Promise<void> {
     try {

@@ -9,8 +9,10 @@ import {
   required,
 } from '@angular/forms/signals';
 import { ButtonComponent } from '../button/button.component';
-import { UserModel } from '@/features/Homepage/homepage.component';
-import { signIn, signUp, confirmSignUp } from 'aws-amplify/auth';
+import { UserModel } from '@/shared/interfaces/UserModel';
+import { signIn, signUp, confirmSignUp } from 'aws-amplify/auth'
+import outputs from '../../../../../amplify_outputs.json';
+import { createAmplifyContext } from 'aws-amplify';
 
 @Component({
   selector: 'app-form',
