@@ -1,9 +1,10 @@
 <div class="header">
-<div class="subheader">
-<h1>Book Nook</h1>
-<h3>Your new favorite book tracker site for all your favorite reads!</h3>
-</div>
-<app-card>
-    <app-form (userModel)="userInfo()"></app-form>
-</app-card>
+  <div class="subheader">
+    <h1>Book Nook</h1>
+    <h3>Your new favorite book tracker site for all your favorite reads!</h3>
+  </div>
+  <app-card>
+    <p>Signed in as {{ username() }}</p>
+    <app-button type="button" (click)="logOut()">Log out</app-button>
+  </app-card>
 </div>
