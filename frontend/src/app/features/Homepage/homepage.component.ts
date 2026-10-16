@@ -1,34 +1,37 @@
-import { Component, OnInit, inject, model, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { getCurrentUser, signOut } from 'aws-amplify/auth';
 import { Card } from '@/shared/components/base/card/card';
+import { ButtonComponent } from '@/shared/components/button/button.component';
 import { FormComponent } from '@/shared/components/form/form.component';
-import { getCurrentUser } from 'aws-amplify/auth';
 import { UserModel } from '@/shared/interfaces/UserModel';
 
 @Component({
   selector: 'app-custom-component',
   standalone: true,
-  imports: [CommonModule, Card, FormComponent],
+  imports: [CommonModule, Card, ButtonComponent],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent implements OnInit {
-  userInfo = model<UserModel>();
+  private readonly router = inject(Router);
+  username = signal('');
   constructor() {
 
   }
 
-  ngOnInit(): void {
-    // Initialization logic here
-    this.getCurrentUserInfo();
+  async ngOnInit(): Promise<void> {
+    try {
+      const user = await getCurrentUser();
+      this.username.set(user.signInDetails?.loginId ?? user.username);
+    } catch {
+      this.username.set('');
+    }
   }
 
-  async getCurrentUserInfo() {
-    const { username, userId, signInDetails } = await getCurrentUser();
-
-    console.log("username", username);
-    console.log("user id", userId);
-    console.log("sign-in details", signInDetails);
+  async logOut(): Promise<void> {
+    await signOut();
+    await this.router.navigateByUrl('/login');
   }
-
 }

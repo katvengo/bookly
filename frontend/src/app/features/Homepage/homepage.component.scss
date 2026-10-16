@@ -29,3 +29,7 @@ h1 {
 h3 {
   @include h3;
 }
+
+p {
+  color: $black;
+}

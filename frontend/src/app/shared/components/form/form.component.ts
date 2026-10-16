@@ -1,13 +1,13 @@
-import { Component, OnInit, signal, model } from '@angular/core';
+import { Component, inject, signal, model } from '@angular/core';
+import { Router } from '@angular/router';
 import { InputComponent } from '../input/input.component';
 import {
   email,
   form,
   FormField,
   FormRoot,
-  minLength,
   required,
-  submit,} from '@angular/forms/signals';
+} from '@angular/forms/signals';
 import { ButtonComponent } from '../button/button.component';
 import { UserModel } from '@/shared/interfaces/UserModel';
 import { signIn, signUp, confirmSignUp } from 'aws-amplify/auth'
@@ -21,7 +21,7 @@ import { createAmplifyContext } from 'aws-amplify';
   imports: [InputComponent, FormField, FormRoot, ButtonComponent]
 })
 export class FormComponent  {
-profile = createAmplifyContext(outputs);
+private readonly router = inject(Router);
 
 showSignUpForm = signal(true);
 showLoginForm = signal(false);
@@ -64,22 +64,27 @@ async onLoginSubmit() {
 
 async onSignUp() {
   try {
+    const accountEmail = this.userInfo()?.email ?? '';
     const { isSignUpComplete, userId, nextStep } = await signUp({
-      username: this.userInfo()?.name ?? '', // Cognito uses username or email depending on config
+      username: accountEmail,
       password: this.userInfo()?.password,
       options: {
         userAttributes: {
-          email: this.userInfo()?.email // Required attribute
-        }
-      }
+          email: accountEmail,
+        },
+      },
     });
     console.log('Sign up response:', { isSignUpComplete, userId, nextStep });
     console.log('Sign up successful, next step:', nextStep);
-    if(nextStep) {
+    if (nextStep.signUpStep === 'CONFIRM_SIGN_UP') {
       this.showSignUpForm.set(false);
       this.showConfirmationForm.set(true);
+      return;
     }
-    // Pro-tip: Next step is typically 'CONFIRM_SIGN_UP' (verifying email code)
+    if (isSignUpComplete) {
+      this.showSignUpForm.set(false);
+      this.showLoginForm.set(true);
+    }
   } catch (error: any) {
     console.log('Sign up error:', error);
     this.errorMessage.set(error.message);
@@ -88,8 +93,13 @@ async onSignUp() {
 
 async onLogin(email: string, password: string) {
   try {
-    const user = await signIn(this.profile, {username: email, password: password});
-    console.log('Login successful:', user);
+    const result = await signIn({ username: email, password });
+    console.log('Login successful:', result);
+    if (result.isSignedIn) {
+      await this.router.navigateByUrl('/');
+      return;
+    }
+    this.errorMessage.set(`Additional step required: ${result.nextStep.signInStep}`);
   } catch (error: any) {
     console.log('Login error:', error);
     this.errorMessage.set(error.message);
@@ -105,6 +115,8 @@ async onConfirmationSubmit() {
       });
 
   console.log('Confirmation successful:', signUp);
+  this.showConfirmationForm.set(false);
+  this.showLoginForm.set(true);
 }
   } catch (error: any) {
     console.log('Confirmation error:', error);
