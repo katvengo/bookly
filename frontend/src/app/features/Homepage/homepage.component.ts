@@ -4,9 +4,7 @@ import { CommonModule } from '@angular/common';
 import { getCurrentUser, signOut } from 'aws-amplify/auth';
 import { Card } from '@/shared/components/base/card/card';
 import { ButtonComponent } from '@/shared/components/button/button.component';
-import { FormComponent } from '@/shared/components/form/form.component';
-import { UserModel } from '@/shared/interfaces/UserModel';
-
+import { APP_TITLE, APP_DESCRIPTION } from '@/shared/constants/common';
 @Component({
   selector: 'app-custom-component',
   standalone: true,
@@ -15,6 +13,9 @@ import { UserModel } from '@/shared/interfaces/UserModel';
   styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent implements OnInit {
+  title = APP_TITLE;
+  description = APP_DESCRIPTION;
+
   private readonly router = inject(Router);
   username = signal('');
   constructor() {
