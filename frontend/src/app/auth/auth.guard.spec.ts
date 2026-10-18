@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router, UrlTree } from '@angular/router';
-import { authGuard } from './auth.guard';
-import { AuthServiceService } from '@/shared/services/auth-service.service';
+import { authGuard, loggedInMatch, loggedOutMatch } from './auth.guard';
+import { AuthServiceService } from '@/shared/services/auth-service/auth-service.service';
 
 describe('authGuard', () => {
   function setup(loggedIn: boolean) {
@@ -36,5 +36,25 @@ describe('authGuard', () => {
 
     expect(result).toBeInstanceOf(UrlTree);
     expect(result).toEqual(login);
+  });
+
+  it('matches the signed-in route only for signed-in users', async () => {
+    setup(true);
+
+    const loggedIn = await TestBed.runInInjectionContext(() => loggedInMatch({} as never, [], {} as never));
+    const loggedOut = await TestBed.runInInjectionContext(() => loggedOutMatch({} as never, [], {} as never));
+
+    expect(loggedIn).toBe(true);
+    expect(loggedOut).toBe(false);
+  });
+
+  it('matches the signed-out route only for signed-out visitors', async () => {
+    setup(false);
+
+    const loggedIn = await TestBed.runInInjectionContext(() => loggedInMatch({} as never, [], {} as never));
+    const loggedOut = await TestBed.runInInjectionContext(() => loggedOutMatch({} as never, [], {} as never));
+
+    expect(loggedIn).toBe(false);
+    expect(loggedOut).toBe(true);
   });
 });

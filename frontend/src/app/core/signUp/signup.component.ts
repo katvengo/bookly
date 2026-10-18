@@ -3,10 +3,10 @@ import { Card } from '@/shared/components/base/card/card';
 import { FormComponent } from '@/shared/components/form/form.component';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signup',
   imports: [Card, FormComponent],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignUpComponent {
 
