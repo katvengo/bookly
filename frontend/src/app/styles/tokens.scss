@@ -1,8 +1,8 @@
 // Design tokens — import with: @use 'tokens' as *;
 // CSS custom properties are defined once in src/styles.scss.
 
-$primary-color: var(--purple);
-$secondary-color: var(--dark-purple);
+$primary-color: var(--stardustPearl);
+$secondary-color: var(--cosmicMauve);
 $secondary-color-hover: var(--dark-purple-50);
 
 $primary-light-color: var(--white);
@@ -15,3 +15,6 @@ $warning: var(--yellow);
 
 $white: var(--white);
 $black: var(--black);
+
+$primary-surface: #fefefe;
+$secondary-surface: #f5f6ef;

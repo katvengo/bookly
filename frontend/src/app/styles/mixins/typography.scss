@@ -11,14 +11,31 @@
   text-shadow: 1px 1px 2px;
 }
 
+@mixin h2 {
+  font-family: "Milonga", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;      /* Ultra bold */
+  line-height: 1.1;      /* Tight line height for large scales */
+  letter-spacing: -0.03em;/* Negative spacing prevents letters looking scattered */
+  color: $white;
+  font-size: 50px;
+}
+
 @mixin h3 {
   font-family: 'Inter', sans-serif;
-  font-size: 1.25rem;       /* Slightly larger than body text */
-  font-weight: 400;         /* Cleaner, lighter weight */
-  color: $white;           /* Muted gray/slate for visual hierarchy */
-  line-height: 1.5;         /* Easy readability */
+  font-size: 24px;       /* Slightly larger than body text */
+  font-weight: 600;         /* Cleaner, lighter weight */
+  color: $white;          /* Muted gray/slate for visual hierarchy */
+  line-height: 1.1;
   letter-spacing: -0.01em;  /* Subtle tightening for clean look */
-  text-wrap: balance;       /* Distributes text evenly across lines */
-  margin-top: 0.5rem;       /* Tight spacing below the main H1 */
-  margin-bottom: 2rem;
+  color: $primary-dark-color;
+  vertical-align: text-bottom;
+}
+
+@mixin h4 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;       /* Slightly larger than body text */
+  font-weight: 600;         /* Cleaner, lighter weight */
+  color: $white;          /* Muted gray/slate for visual hierarchy */
+  line-height: 1.1;
+  letter-spacing: -0.01em;  /* Subtle tightening for clean look */
 }

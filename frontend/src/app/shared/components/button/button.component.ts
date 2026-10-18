@@ -8,6 +8,7 @@ import { Component, input } from '@angular/core';
 export class ButtonComponent {
 type = input<string>('text');
 disabled = input<boolean>(false);
+variant = input<string>('primary');
 
 onClick() {
   console.log('Button clicked');

@@ -1,5 +1,5 @@
 div {
-  width: 320px;
+  width: auto; // Use auto so that the card width changes based on the content inside it
   padding: 24px;
   background-color: #ffffff;
   border: 1px solid #e5e7eb;

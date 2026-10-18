@@ -1,0 +1,33 @@
+@if (errorMessage()) {
+  <span class="error">{{ errorMessage() }}</span>
+}
+
+@if(showSignUpForm) {
+<form [formRoot]="signUpForm" (submit)="onSignUpSubmit()">
+<label>Name</label>
+<app-input [formField]="signUpForm.name"></app-input>
+<label>Email</label>
+
+<app-input [formField]="signUpForm.email" [isError]="signUpForm.email().touched() && signUpForm.email().invalid()"></app-input>
+@if (signUpForm.email().touched() && signUpForm.email().invalid()) {
+  @for (error of signUpForm.email().errors(); track $index) {
+   <span class="error">
+    {{ error.message }}
+  </span>
+  }
+
+}
+  <label>Password</label>
+  <app-input [formField]="signUpForm.password"></app-input>
+
+<app-button [type]="'submit'" [disabled]="signUpForm().invalid()">Create an Account</app-button>
+<app-button [type]="'button'" (click)="shouldShowLoginScreen()">Already have an account? Log in</app-button>
+</form>
+} @else {
+  <form [formRoot]="confirmationForm" (submit)="onConfirmationSubmit()">
+  <label>Confirmation Code</label>
+  <app-input [formField]="confirmationForm.confirmation_number"></app-input>
+
+  <app-button [type]="'submit'" [disabled]="confirmationForm().invalid()">Confirm your account</app-button>
+</form>
+}

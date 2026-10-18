@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  width: auto;
+  height: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.subheader {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+app-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: auto;
+}
+
+.button-container {
+  display: flex;
+  align-self: center;
+  flex-direction: row;
+  gap: 18px;
+}

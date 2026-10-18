@@ -12,10 +12,6 @@ button {
   align-items: center;
   cursor: pointer;
   padding: 0px;
-  background-color: $secondary-color;
-  border: none;
-  border-radius: 60px;
-  color: $white;
 
   font-weight: 600;
 }
@@ -29,4 +25,18 @@ button:disabled {
   opacity: 30%;
   color: $white;
   cursor: not-allowed;
+}
+
+.button-primary-full {
+  background-color: $secondary-color;
+  border: 1px solid $secondary-color;
+  border-radius: 60px;
+  color: $white;
+}
+
+.button-primary-outline {
+  background-color: $secondary-color;
+  border: none;
+  border-radius: 60px;
+  color: $white;
 }

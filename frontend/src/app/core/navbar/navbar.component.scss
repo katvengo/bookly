@@ -1,0 +1,57 @@
+@use 'tokens' as *;
+@use 'mixins/typography' as *;
+
+.header-navbar {
+  display: flex;
+  width: 100%;
+  height: 69px;
+  padding: 12px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  background-color: $primary-surface;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  gap: 32px;
+}
+
+h2 {
+  text-align: center; /* Center text inside the h2 element */
+  @include h2;
+  vertical-align: middle;
+  color: $black;
+}
+
+h3 {
+  text-align: center; /* Center text inside the h2 element */
+  @include h3;
+  padding-top: 5px;
+  color: $black;
+
+}
+
+h4 {
+  text-align: center; /* Center text inside the h2 element */
+  @include h4;
+  padding-top: 5px;
+  color: $black;
+
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

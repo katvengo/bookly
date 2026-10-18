@@ -6,10 +6,27 @@
   align-items: center;
 }
 
-.header {
-  display:flex;
-  align-items: center;
+.homepage {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: $secondary-surface;
+  color: $black;
+}
+
+.columns {
+  display: flex;
   flex-direction: column;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+section {
+  display: flex;
+  border: 1px solid $white;
+  height: 100%;
+  margin: 0;
+  padding: 20px;
 }
 
 .subheader {
@@ -23,13 +40,32 @@ h1, h3 {
 }
 
 h1 {
+  color: $white;
+
   @include h1;
 }
 
 h3 {
+  color: $white;
+
   @include h3;
 }
 
 p {
-  color: $black;
+  color: $white;
 }
+
+aside {
+  width: 20%;
+  height: 100vh;
+  background-color: $white;
+  color: black;
+  box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.20);
+  padding: 12px;
+}
+
+.aside-close {
+  width: 0;
+  display: none;
+}
+
