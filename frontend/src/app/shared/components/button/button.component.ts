@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -9,9 +9,10 @@ export class ButtonComponent {
 type = input<string>('text');
 disabled = input<boolean>(false);
 variant = input<string>('primary');
+clickEvent = output<void>();
 
 onClick() {
-  console.log('Button clicked');
+  this.clickEvent.emit();
 }
 
 }

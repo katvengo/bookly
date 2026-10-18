@@ -4,10 +4,10 @@
     <h3>{{description}}</h3>
   </div>
   <app-card>
-    User is not authenticated. Please log in to access this page.
+    <p>User is not authenticated. Please log in to access this page.</p>
     <div class="button-container">
-    <app-button [type]="'button'" [variant]="'primary-outline'">Create an Account</app-button>
-    <app-button [type]="'button'">Login</app-button>
+    <app-button [type]="'button'" [variant]="'primary-outline'" (clickEvent)="onLogin()">Create an Account</app-button>
+    <app-button [type]="'button'" [variant]="'primary'" (clickEvent)="onLogin()">Login</app-button>
     </div>
 
 
