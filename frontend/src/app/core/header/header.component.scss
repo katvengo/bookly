@@ -1,0 +1,18 @@
+@use 'tokens' as *;
+@use 'mixins/typography' as *;
+header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: $secondary-surface;
+  border-bottom: 1px solid $black;
+
+  max-height: 100px;
+  gap: 100px;
+}
+
+h2 {
+  padding-left: 20px;
+  @include h2;
+}

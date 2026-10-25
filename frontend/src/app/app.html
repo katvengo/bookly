@@ -1,11 +1,5 @@
 <!-- Navigation bar can now sit at the top-->
-@if(isAuthenticated()) {
-  <header>
-  <h1>{{title}}</h1>
-  <h4>{{description}}</h4>
-</header>
-<app-navbar></app-navbar>
-}
+ <app-header></app-header>
 <div class="router-host">
 <router-outlet class="router-outlet"></router-outlet>
 </div>

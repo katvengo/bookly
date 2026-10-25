@@ -1,3 +1,22 @@
-<input [type]="type()" [id]="id()" [name]="name()" [value]="value()" [placeholder]="placeholder()"
-  (input)="value.set($event.target.value)" [disabled]="disabled()" [readonly]="readonly()" [class.invalid]="isError()"
+<div
+class="input-container"
+[class]="variant()"
+[class.invalid]="isError()"
+[class.focus]="isFocused()"
+[class.hover]="isHovered()"
+(mouseover)="isHovered.set(true)"
+(mouseout)="isHovered.set(false)"
+(mousedown)="isFocused.set(true)"
+(mouseleave)="isFocused.set(true)"
+(onblur)="onBlur($event)"
+>
+<input
+  [type]="type()"
+   [id]="id()"
+   [name]="name()"
+   [value]="value()"
+   [placeholder]="placeholder()"
+  (input)="value.set($event.target.value)"
+   [disabled]="disabled()" [readonly]="readonly()"
   [attr.aria-invalid]="invalid()" (blur)="touch.emit()">
+</div>

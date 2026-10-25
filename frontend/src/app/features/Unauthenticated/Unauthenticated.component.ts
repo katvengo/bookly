@@ -25,4 +25,9 @@ export class UnauthenticatedComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
+  onSignup() {
+    console.log('Navigating to login page...');
+    this.router.navigate(['signUp']);
+  }
+
 }

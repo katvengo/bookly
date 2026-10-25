@@ -34,13 +34,6 @@ signUpForm = form(this.signUpModel, (schemaPath) => {
 
   required(schemaPath.password, {message: 'Password is required'});
 });
-loginModel = signal({email: '', password: ''});
-loginForm = form(this.loginModel, (schemaPath) => {
-  required(schemaPath.email, {message: 'Email is required'});
-  email(schemaPath.email, {message: 'Enter a valid email address'});
-
-  required(schemaPath.password, {message: 'Password is required'});
-});
 confirmationModel = signal({username: '', confirmation_number: ''});
 confirmationForm = form(this.confirmationModel, (schemaPath) => {
   required(schemaPath.confirmation_number, {message: 'Confirmation code is required'});
@@ -55,11 +48,6 @@ async onSignUpSubmit() {
   this.userInfo.set(this.signUpModel());
   console.log('User info set:', this.userInfo());
   await this.onSignUp();
-}
-
-async onLoginSubmit() {
-  console.log('Login form submitted successfully:', this.loginModel());
-  await this.onLogin(this.loginModel().email, this.loginModel().password);
 }
 
 async onSignUp() {
@@ -91,20 +79,7 @@ async onSignUp() {
   }
 }
 
-async onLogin(email: string, password: string) {
-  try {
-    const result = await signIn({ username: email, password });
-    console.log('Login successful:', result);
-    if (result.isSignedIn) {
-      await this.router.navigateByUrl('/');
-      return;
-    }
-    this.errorMessage.set(`Additional step required: ${result.nextStep.signInStep}`);
-  } catch (error: any) {
-    console.log('Login error:', error);
-    this.errorMessage.set(error.message);
-  }
-}
+
 async onConfirmationSubmit() {
   console.log('Confirmation form submitted with:', this.userInfo()?.email, this.confirmationModel().confirmation_number);
   try {
@@ -127,6 +102,5 @@ async onConfirmationSubmit() {
 async shouldShowLoginScreen() {
 this.showSignUpForm.set(false);
 this.showLoginForm.set(true);
-
 }
 }

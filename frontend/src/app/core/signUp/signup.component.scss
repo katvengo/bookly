@@ -30,3 +30,20 @@ h1 {
 h3 {
   @include h3;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  app-button {
+    padding-top: 24px;
+  }
+}
+
+.navigation-text {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 3px;
+}

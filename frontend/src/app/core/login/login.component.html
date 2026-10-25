@@ -4,6 +4,30 @@
     <h3>{{description}}</h3>
   </div>
   <app-card>
-    <app-form></app-form>
+    @if (errorMessage()) {
+    <span class="error">{{ errorMessage() }}</span>
+    }
+    <form [formRoot]="loginForm" (submit)="onLoginSubmit()">
+      <label>Email</label>
+
+      <app-input [formField]="loginForm.email"
+        [isError]="loginForm.email().touched() && loginForm.email().invalid()"></app-input>
+      @if (loginForm.email().touched() && loginForm.email().invalid()) {
+      @for (error of loginForm.email().errors(); track $index) {
+      <span class="error">
+        {{ error.message }}
+      </span>
+      }
+
+      }
+      <label>Password</label>
+      <app-input [formField]="loginForm.password"></app-input>
+
+      <app-button [type]="'submit'" [disabled]="loginForm().invalid()" class="login-button">Log in to your
+        account</app-button>
+      <span class="navigation-text">Not a user? <nav><a routerLink="/signUp">Sign-up</a></nav>
+
+      </span>
+    </form>
   </app-card>
 </div>

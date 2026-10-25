@@ -1,8 +1,8 @@
 @if (errorMessage()) {
   <span class="error">{{ errorMessage() }}</span>
 }
-
-@if(showSignUpForm) {
+<app-card>
+@if(showSignUpForm()) {
 <form [formRoot]="signUpForm" (submit)="onSignUpSubmit()">
 <label>Name</label>
 <app-input [formField]="signUpForm.name"></app-input>
@@ -21,7 +21,9 @@
   <app-input [formField]="signUpForm.password"></app-input>
 
 <app-button [type]="'submit'" [disabled]="signUpForm().invalid()">Create an Account</app-button>
-<app-button [type]="'button'" (click)="shouldShowLoginScreen()">Already have an account? Log in</app-button>
+<span class="navigation-text">Already a User? <nav><a routerLink="/login">Log In</a></nav>
+
+</span>
 </form>
 } @else {
   <form [formRoot]="confirmationForm" (submit)="onConfirmationSubmit()">
@@ -29,5 +31,7 @@
   <app-input [formField]="confirmationForm.confirmation_number"></app-input>
 
   <app-button [type]="'submit'" [disabled]="confirmationForm().invalid()">Confirm your account</app-button>
+
 </form>
 }
+</app-card>

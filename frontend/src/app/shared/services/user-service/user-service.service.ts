@@ -11,15 +11,10 @@ private username = signal<string | null>(null)
 
 
 async getUser() {
-  console.log('Calling getUser in UserServiceService')
   try {
     const { username, userId, signInDetails } = await getCurrentUser();
-
-    console.log("username", username);
-    console.log("user id", userId);
-    console.log("sign-in details", signInDetails);
+    this.username.set(username);
     return { username, userId, signInDetails };
-    // this.username.set(usernamer.?.loginId ?? user.username);
   } catch(error) {
     console.log("Error getting current user:", error);
     this.username.set('');
