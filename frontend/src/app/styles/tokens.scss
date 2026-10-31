@@ -1,7 +1,7 @@
 // Design tokens — import with: @use 'tokens' as *;
 // CSS custom properties are defined once in src/styles.scss.
 
-$primary-color: var(--oceanDust);
+$primary-color: var(--dark-teal);
 $primary-color-dark: var(--black);
 
 $secondary-color: var(--ivory);
@@ -20,3 +20,10 @@ $black: var(--black);
 
 $primary-surface: #fefefe;
 $secondary-surface: #f5f6ef;
+
+/* SCSS HEX */
+$shadow-grey: #28262cff;
+$soft-periwinkle: #998fc7ff;
+$periwinkle: #d4c2fcff;
+$lavender-mist: #f9f5ffff;
+$true-cobalt: #14248aff;
