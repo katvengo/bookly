@@ -1,5 +1,6 @@
-<!-- Navigation bar can now sit at the top-->
- <app-header></app-header>
+@if (isAuthenticated()) {
+  <app-header></app-header>
+}
 <div class="router-host">
-<router-outlet class="router-outlet"></router-outlet>
+  <router-outlet class="router-outlet"></router-outlet>
 </div>

@@ -21,6 +21,7 @@ describe('AuthServiceService', () => {
     const service = TestBed.inject(AuthServiceService);
 
     await expect(service.isLoggedIn()).resolves.toBe(true);
+    expect(service.isAuthenticated()).toBe(true);
   });
 
   it('is logged out when Cognito has no current session', async () => {
@@ -32,5 +33,6 @@ describe('AuthServiceService', () => {
     const service = TestBed.inject(AuthServiceService);
 
     await expect(service.isLoggedIn()).resolves.toBe(false);
+    expect(service.isAuthenticated()).toBe(false);
   });
 });
